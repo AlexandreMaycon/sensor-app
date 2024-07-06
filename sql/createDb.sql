@@ -7,3 +7,10 @@ CREATE TABLE equipment (
     timestamp TEXT NOT NULL,
     value REAL NOT NULL
 );
+
+CREATE TABLE user (
+  id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  login VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);

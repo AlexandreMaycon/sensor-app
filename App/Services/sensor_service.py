@@ -1,18 +1,16 @@
-from App.Repository import Equipaments
-from fastapi import UploadFile, HTTPException
+from App.Repository import Equipments
+from fastapi import UploadFile
 import pandas as pd
+from App.Lib.Types import SaveEquipmentBody
 
 class SensorService:
     
-    def save(data: dict):
-        if "equipmentId" not in data or "timestamp" not in data or "value" not in data:
-            raise HTTPException(status_code=400, detail="Dados inválidos")
-        
-        repo = Equipaments
+    def save(body: SaveEquipmentBody):
+        repo = Equipments
         repo.create_equipment_data(
-            data["equipmentId"],
-            data["timestamp"],
-            data["value"]
+            body.equipmentId,
+            body.timestamp,
+            body.value
         )
         
         return {
@@ -22,7 +20,7 @@ class SensorService:
     
     def save_file(file: UploadFile):
         df = pd.read_csv(file.file, sep=';')
-        repo = Equipaments
+        repo = Equipments
         
         for _, row in df.iterrows():
             repo.create_equipment_data(

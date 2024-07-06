@@ -1,8 +1,6 @@
 from App.DataBase import get_connection
 
-class Equipaments:
-    def get_table() -> str:
-        return "equipment" 
+class Equipments:
 
     def create_equipment_data(equipment_id: str, timestamp: str, value: str):
         connection = get_connection()

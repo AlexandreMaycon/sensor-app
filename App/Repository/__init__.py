@@ -1,1 +1,2 @@
-from .equipments import Equipaments
+from .equipments import Equipments
+from .users import Users
