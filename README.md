@@ -36,5 +36,5 @@ python -m unittest discover -s .\tests\Cases -p "test_*.py"
 ### Access doc
 http://localhost:8000/docs
 
-### To see the index you use
+### To see the index you can use
 **Live Server**
