@@ -38,16 +38,23 @@
     </footer>
 </body>
 <script>
-    document.getElementById('period-form').addEventListener('submit', function(event) {
+    document.getElementById('period-form').addEventListener('submit', async function(event) {
         event.preventDefault();
         const period = document.getElementById('period').value;
-        fetch(`http://localhost:8000/average/?period=${period}`)
-            .then(response => response.json())
-            .then(resp => {
-                let plot = resp.plot_url
-                console.log(plot)
-                document.getElementById('result').innerHTML = "<img src='data:image/png;base64, " + plot +  "'>";;
-            });
+        try {
+            const response = await fetch(`http://localhost:8000/average/?period=${period}`);
+            
+            if (!response.ok) {
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger" role="alert">Equipment not found</div>';
+                return;
+            }
+            
+            const resp = await response.json();
+            let plot = resp.plot_url;
+            document.getElementById('result').innerHTML = "<img src='data:image/png;base64, " + plot + "'>";
+        } catch (error) {
+            document.getElementById('result').innerHTML = '<div class="alert alert-danger" role="alert">An error occurred</div>';
+        }
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

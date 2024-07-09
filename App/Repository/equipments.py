@@ -20,7 +20,7 @@ class Equipments:
         try:
             with connection.cursor() as cursor:
                 get_equipment = """
-                SELECT * FROM equipment WHERE timestamp <= %s
+                SELECT * FROM equipment WHERE timestamp >= %s
                 """
                 
                 cursor.execute(get_equipment, period)

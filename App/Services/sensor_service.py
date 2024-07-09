@@ -1,7 +1,7 @@
 from App.Repository import Equipments
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 import pandas as pd
-from App.Lib.Types import SaveEquipmentBody
+from App.Lib.Types import SaveEquipmentBody, DefaultResponse, AverageResponse
 from App.Lib.Treatment import format_date_to_compare
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
@@ -10,7 +10,7 @@ import base64
 
 class SensorService:
     
-    def save(body: SaveEquipmentBody):
+    def save(body: SaveEquipmentBody) -> DefaultResponse:
         repo = Equipments
         repo.create_equipment_data(
             body.equipmentId,
@@ -23,7 +23,7 @@ class SensorService:
             "message": "Equipment successfully created"
         }
     
-    def save_file(file: UploadFile):
+    def save_file(file: UploadFile) -> DefaultResponse:
         df = pd.read_csv(file.file, sep=';')
         repo = Equipments
         
@@ -39,7 +39,7 @@ class SensorService:
             "message": "Equipment successfully created"
         }
     
-    def get_average(period: str):
+    def get_average(period: str) -> AverageResponse:
         now = datetime.now()
         
         match period:
@@ -58,7 +58,11 @@ class SensorService:
         
         data = Equipments.get_by_date(formated_date)
         if not data:
-            return {"message": "No data available for the specified period"}
+            raise HTTPException(
+                status_code= 404,
+                detail="Equipments not found",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         
         equipment_data = {}
         

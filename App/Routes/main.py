@@ -5,6 +5,7 @@ from App.Lib.Types\
 from App.Data import verify_token
 from fastapi.templating import Jinja2Templates
 import os
+from typing import Literal
 from typing import Annotated
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -44,6 +45,6 @@ async def upload_csv(file: UploadFile = File(...), token: str = Depends(verify_t
     return resp
 
 @app.get("/average/")
-async def average(period: str | None = None):
+async def average(period: Literal['24h', '48h', '1w', '1m']) -> AverageResponse:
     resp = SensorService.get_average(period)
     return resp
