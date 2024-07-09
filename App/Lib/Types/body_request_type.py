@@ -13,7 +13,3 @@ class SaveUserBody(BaseModel):
 class GenerateTokenBody(BaseModel):
     login: str
     password: str
-
-class Response(BaseModel):
-    status: str
-    message: str

@@ -14,3 +14,17 @@ class Equipments:
             connection.commit()
         finally:
             connection.close()
+    
+    def get_by_date(period: str):
+        connection = get_connection()
+        try:
+            with connection.cursor() as cursor:
+                get_equipment = """
+                SELECT * FROM equipment WHERE timestamp <= %s
+                """
+                
+                cursor.execute(get_equipment, period)
+                return cursor.fetchall()
+        finally:
+            connection.close()
+        

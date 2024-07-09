@@ -17,5 +17,5 @@ class UserService:
         
         return {
             "status": "success",
-            "message": "Usuário criado com sucesso"
+            "message": "User successfully created"
         }

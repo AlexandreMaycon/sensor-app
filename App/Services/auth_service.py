@@ -25,7 +25,7 @@ class AuthService:
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-        access_token_expires = timedelta(minutes=1)
+        access_token_expires = timedelta(minutes=15)
         expire = datetime.now(timezone.utc) + access_token_expires
         
         encoded_data = {
@@ -36,6 +36,7 @@ class AuthService:
         encoded_jwt = jwt.encode(encoded_data, 'secret', algorithm='HS256')
         
         return {
+            "status": 'success',
             "access_token": encoded_jwt,
             "token_type": "bearer",
         }
