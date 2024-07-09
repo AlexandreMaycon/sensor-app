@@ -7,7 +7,7 @@ https://github.com/AlexandreMaycon/sensor-app.git
 
 ### Install the dependencies
 ```bash
-pip install -r requirements.text
+pip install -r requirements.txt
 ```
 
 ### Create a .env
